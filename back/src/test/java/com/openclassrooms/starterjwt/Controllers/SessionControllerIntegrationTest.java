@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -22,7 +23,12 @@ import java.util.Date;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:cleanup.sql")
 public class SessionControllerIntegrationTest {
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -144,7 +150,7 @@ public class SessionControllerIntegrationTest {
     @Test
     public void participateInSession_whenValidData_thenReturnsOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/api/session/2/participate/1")
+                        .post("/api/session/1/participate/2")
                         .header("Authorization", "Bearer " + jwt))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -152,7 +158,7 @@ public class SessionControllerIntegrationTest {
     @Test
     public void unParticipateInSession_whenValidData_thenReturnsOk() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/session/2/participate/1")
+                        .delete("/api/session/1/participate/1")
                         .header("Authorization", "Bearer " + jwt))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -168,7 +174,7 @@ public class SessionControllerIntegrationTest {
     @Test
     public void unParticipateInSession_whenIdIsNotANumber_thenReturnsBadRequest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/api/session/2/participate/id")
+                        .delete("/api/session/1/participate/id")
                         .header("Authorization", "Bearer " + jwt))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }

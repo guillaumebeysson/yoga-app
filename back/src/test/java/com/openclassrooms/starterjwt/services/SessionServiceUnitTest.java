@@ -49,6 +49,7 @@ public class SessionServiceUnitTest {
         session.setId(sessionId);
         session.setName("Yoga");
         session.setUsers(userList);
+        session.setDescription("test description");
 
         sessionCaptor.getAllValues().clear();
     }
@@ -105,7 +106,10 @@ public class SessionServiceUnitTest {
 
         // then
         verify(sessionRepository).findById(sessionId);
-        assertEquals(session, foundSession);
+        assertEquals(session.getId(), foundSession.getId());
+        assertEquals(session.getName(), foundSession.getName());
+        assertEquals(session.getDescription(), foundSession.getDescription());
+
     }
 
     @Test
