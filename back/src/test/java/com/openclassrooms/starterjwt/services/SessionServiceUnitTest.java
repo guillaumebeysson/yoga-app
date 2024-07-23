@@ -12,12 +12,12 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -182,5 +182,41 @@ public class SessionServiceUnitTest {
         List<Session> testSessionList = sessionMapper.toEntity(sessionDtoList);
 
         assertNull(testSessionList);
+    }
+
+    @Test
+    public void hashCode_whenSessionsAreEqual_thenReturnsSameHashCode() {
+        Session session1 = new Session();
+        session1.setId(1L);
+
+        Session session2 = new Session();
+        session2.setId(1L);
+
+        assertEquals(session1.hashCode(), session2.hashCode());
+    }
+
+    @Test
+    public void hashCode_whenSessionsAreNotEqual_thenReturnsDifferentHashCode() {
+        Session session1 = new Session();
+        session1.setId(1L);
+
+        Session session2 = new Session();
+        session2.setId(2L);
+
+        assertNotEquals(session1.hashCode(), session2.hashCode());
+    }
+
+    @Test
+    public void setCreatedAt_whenCalled_thenSetsCreatedAt() {
+        LocalDateTime now = LocalDateTime.now();
+        session.setCreatedAt(now);
+        assertEquals(now, session.getCreatedAt());
+    }
+
+    @Test
+    public void setUpdatedAt_whenCalled_thenSetsUpdatedAt() {
+        LocalDateTime now = LocalDateTime.now();
+        session.setUpdatedAt(now);
+        assertEquals(now, session.getUpdatedAt());
     }
 }
