@@ -1,16 +1,18 @@
-package com.openclassrooms.starterjwt.services;
+package com.openclassrooms.starterjwt.mappers;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mapstruct.factory.Mappers;
 
 import com.openclassrooms.starterjwt.dto.SessionDto;
 import com.openclassrooms.starterjwt.mapper.SessionMapper;
 import com.openclassrooms.starterjwt.models.Session;
 import com.openclassrooms.starterjwt.models.Teacher;
 import com.openclassrooms.starterjwt.models.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import com.openclassrooms.starterjwt.services.TeacherService;
+import com.openclassrooms.starterjwt.services.UserService;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(org.mockito.junit.jupiter.MockitoExtension.class)
-public class SessionServiceUnitTest {
+public class SessionMapperUnitTest {
+
     @Mock
     private UserService userService;
 
@@ -40,7 +42,6 @@ public class SessionServiceUnitTest {
 
     @BeforeEach
     public void init() {
-
         teacher = new Teacher();
         teacher.setId(5L);
 
@@ -79,14 +80,14 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toDto_whenSessionIsValid_thenReturnsSessionDto() {
+    public void toDto_whenValidSession_thenReturnsDto() {
         SessionDto testSessionDto = sessionMapper.toDto(session);
 
         assertEquals(sessionDto, testSessionDto);
     }
 
     @Test
-    public void toDto_whenSessionIsNull_thenReturnsNull() {
+    public void toDto_whenNullSession_thenReturnsNull() {
         Session session = null;
 
         SessionDto testSessionDto = sessionMapper.toDto(session);
@@ -95,7 +96,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toDto_whenSessionHasNullTeacher_thenReturnsDtoWithNullTeacherId() {
+    public void toDto_whenSessionWithNullTeacher_thenReturnsDtoWithNullTeacherId() {
         session.setTeacher(null);
 
         SessionDto testSessionDto = sessionMapper.toDto(session);
@@ -103,7 +104,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toDto_whenSessionHasNullTeacherId_thenReturnsDtoWithNullTeacherId() {
+    public void toDto_whenSessionWithNullTeacherId_thenReturnsDtoWithNullTeacherId() {
         session.getTeacher().setId(null);
 
         SessionDto testSessionDto = sessionMapper.toDto(session);
@@ -111,21 +112,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toEntity_whenSessionDtoIsValid_thenReturnsSession() {
-        when(teacherService.findById(teacher.getId())).thenReturn(teacher);
-        when(userService.findById(user1.getId())).thenReturn(user1);
-        when(userService.findById(user2.getId())).thenReturn(user2);
-
-        Session testSession = sessionMapper.toEntity(sessionDto);
-
-        verify(teacherService).findById(teacher.getId());
-        verify(userService).findById(user1.getId());
-        verify(userService).findById(user2.getId());
-        assertEquals(session, testSession);
-    }
-
-    @Test
-    public void toEntity_whenSessionDtoIsNull_thenReturnsNull() {
+    public void toEntity_whenNullDto_thenReturnsNull() {
         SessionDto sessionDto = null;
 
         Session testSession = sessionMapper.toEntity(sessionDto);
@@ -134,7 +121,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toDtoList_whenSessionListIsValid_thenReturnsSessionDtoList() {
+    public void toDtoList_whenValidSessionList_thenReturnsDtoList() {
         List<Session> sessionList = new ArrayList<>();
         sessionList.add(session);
 
@@ -147,7 +134,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toDtoList_whenSessionListIsNull_thenReturnsNull() {
+    public void toDtoList_whenNullSessionList_thenReturnsNull() {
         List<Session> sessionList = null;
 
         List<SessionDto> testSessionDtoList = sessionMapper.toDto(sessionList);
@@ -156,27 +143,7 @@ public class SessionServiceUnitTest {
     }
 
     @Test
-    public void toEntityList_whenSessionDtoListIsValid_thenReturnsSessionList() {
-        List<Session> sessionList = new ArrayList<>();
-        sessionList.add(session);
-
-        List<SessionDto> sessionDtoList = new ArrayList<>();
-        sessionDtoList.add(sessionDto);
-
-        when(teacherService.findById(teacher.getId())).thenReturn(teacher);
-        when(userService.findById(user1.getId())).thenReturn(user1);
-        when(userService.findById(user2.getId())).thenReturn(user2);
-
-        List<Session> testSessionList = sessionMapper.toEntity(sessionDtoList);
-
-        verify(teacherService).findById(teacher.getId());
-        verify(userService).findById(user1.getId());
-        verify(userService).findById(user2.getId());
-        assertEquals(sessionList, testSessionList);
-    }
-
-    @Test
-    public void toEntityList_whenSessionDtoListIsNull_thenReturnsNull() {
+    public void toEntityList_whenNullDtoList_thenReturnsNull() {
         List<SessionDto> sessionDtoList = null;
 
         List<Session> testSessionList = sessionMapper.toEntity(sessionDtoList);
