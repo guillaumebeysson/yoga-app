@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.starterjwt.payload.request.LoginRequest;
 import com.openclassrooms.starterjwt.payload.request.SignupRequest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -70,6 +72,18 @@ public class AuthControllerIntegrationTest {
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(jsonPath("$.message").value("User registered successfully!"));
+
+        // Testing equals, hashCode, toString, and canEqual
+        SignupRequest anotherSignupRequest = new SignupRequest();
+        anotherSignupRequest.setEmail(signupRequest.getEmail());
+        anotherSignupRequest.setLastName(signupRequest.getLastName());
+        anotherSignupRequest.setFirstName(signupRequest.getFirstName());
+        anotherSignupRequest.setPassword(signupRequest.getPassword());
+
+        assertEquals(signupRequest, anotherSignupRequest);
+        assertEquals(signupRequest.hashCode(), anotherSignupRequest.hashCode());
+        assertEquals(signupRequest.toString(), anotherSignupRequest.toString());
+        assertEquals(signupRequest, anotherSignupRequest);
     }
 
     @Test
@@ -86,6 +100,5 @@ public class AuthControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(signupRequest)))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
-
 
 }
