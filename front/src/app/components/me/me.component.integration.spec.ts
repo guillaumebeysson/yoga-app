@@ -73,6 +73,14 @@ describe('MeComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should go back in history', () => {
+    const historySpy = jest.spyOn(window.history, 'back');
+
+    component.back();
+
+    expect(historySpy).toHaveBeenCalled();
+  });
+
   it('should delete user properly', async () => {
     const userServiceSpy = jest.spyOn(userService, 'delete').mockReturnValue(of({} as any))
     const matSnackBarSpy = jest.spyOn(matSnackBar, 'open')
