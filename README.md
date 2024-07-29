@@ -79,4 +79,4 @@ Clone the project in the directory of your choice :
 >back/target/site/jacoco/index.html
 
 - Screenshot coverage:
-![coverage tests back-end](../Testez-une-application-full-stack/ressources/screeshots-coverage/tests_back_end.png "coverage tests back-end")
+![coverage tests back-end](/ressources/screeshots-coverage/tests_back_end.png "coverage tests back-end")
