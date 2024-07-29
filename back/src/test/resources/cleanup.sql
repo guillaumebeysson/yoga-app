@@ -22,7 +22,7 @@ VALUES ('Dance','Random','2023-04-05 10:13:16',1,'2023-04-04 10:13:16','2023-04-
 
 INSERT INTO USERS (first_name, last_name, admin, email, password)
 VALUES ('Admin', 'Admin', true, 'yoga@studio.com', '$2a$10$.Hsa/ZjUVaHqi0tp9xieMeewrnZxrZ5pQRzddUXE/WjDu2ZThe6Iq'),
-       ('Beysson', 'Guillaume', true, 'guillaume.beysson@gmail.com', '$2a$10$KO6NEGaaItJf5TArHLS5MurbgCjuyfahi5w7P2Hq4a2e1CTTiMj4C');
+       ('Beysson', 'Guillaume', false, 'guillaume.beysson@gmail.com', '$2a$10$KO6NEGaaItJf5TArHLS5MurbgCjuyfahi5w7P2Hq4a2e1CTTiMj4C');
 
 
 INSERT INTO PARTICIPATE (user_id,session_id) VALUES (1,1);
