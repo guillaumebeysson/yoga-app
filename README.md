@@ -57,6 +57,9 @@ Clone the project in the directory of your choice :
 - Location coverage report is:
 >front/coverage/jest/lcov-report/index.html
 
+- Screenshot coverage:
+![coverage tests front-end](/ressources/screeshots-coverage/tests_front_end.png "coverage tests front-end")
+
 #### Cypress (end to end tests)
 
 - To start Cypress run:
@@ -67,6 +70,9 @@ Clone the project in the directory of your choice :
 
 - Location coverage report is:
 >front/coverage/lcov-report/index.html
+
+- Screenshot coverage:
+![coverage tests end-to-end](/ressources/screeshots-coverage/test_end_to_end.png "coverage tests end-to-end")
 
 ### Back end tests
 
