@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.Controllers;
+package com.openclassrooms.starterjwt.controllers;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -21,6 +22,7 @@ import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
 
 import java.util.Date;
 
+@TestPropertySource(locations="classpath:application-test.properties")
 @SpringBootTest
 @AutoConfigureMockMvc
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:cleanup.sql")
